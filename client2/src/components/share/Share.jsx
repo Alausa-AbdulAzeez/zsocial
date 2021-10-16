@@ -8,7 +8,7 @@ import {
 import { useContext, useRef, useState } from "react";
 import "./share.css";
 import { AuthContext } from "../../context/AuthContext";
-import { axiosInstance } from "../../../config";
+import axios from "axios";
 
 function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -28,16 +28,15 @@ function Share() {
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
-      console.log(`newPost${newPost}`);
 
       try {
-        await axiosInstance.post("/upload", data);
+        await axios.post("/upload", data);
       } catch (error) {
         console.log(error);
       }
     }
     try {
-      await axiosInstance.post("/posts", newPost);
+      await axios.post("/posts", newPost);
       window.location.reload();
       // window.location.reload();
     } catch (error) {

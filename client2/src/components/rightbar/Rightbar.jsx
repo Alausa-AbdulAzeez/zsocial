@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
 import { AuthContext } from "../../context/AuthContext";
-import { axiosInstance } from "../../../config";
+import axios from "axios";
 
 function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -22,12 +22,12 @@ function Rightbar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axiosInstance.put("/users/" + user._id + "/unfollow", {
+        await axios.put("/users/" + user._id + "/unfollow", {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axiosInstance.put("/users/" + user._id + "/follow", {
+        await axios.put("/users/" + user._id + "/follow", {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -41,9 +41,7 @@ function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendsList = await axiosInstance.get(
-          "/users/friends/" + user._id
-        );
+        const friendsList = await axios.get("/users/friends/" + user._id);
         setFriends(friendsList.data);
       } catch (error) {
         console.log(error);

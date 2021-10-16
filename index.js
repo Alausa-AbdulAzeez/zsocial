@@ -49,12 +49,7 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 
-app.use(express.static(path.resolve(__dirname, "./client2/build")));
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client2/build", "index.html"));
-});
-
-const port = process.env.PORT || 8800;
+const port = 8800;
 app.listen(port, () => {
   console.log(`server is listening on port ${port}...`);
 });

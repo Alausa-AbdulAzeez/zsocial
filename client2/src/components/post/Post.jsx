@@ -4,7 +4,7 @@ import "./post.css";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { axiosInstance } from "../../../config";
+import axios from "axios";
 
 function Post({ post }) {
   const { desc, img, createdAt, comments, userId } = post;
@@ -20,7 +20,7 @@ function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axiosInstance.get(`/users?userId=${userId}`);
+      const res = await axios.get(`/users?userId=${userId}`);
       await setUser(res.data);
       // console.log(res);
     };
@@ -29,7 +29,7 @@ function Post({ post }) {
 
   const likeHandler = () => {
     try {
-      axiosInstance.put("/posts/" + post._id + "/like", {
+      axios.put("/posts/" + post._id + "/like", {
         userId: currentUser._id,
       });
     } catch (error) {
